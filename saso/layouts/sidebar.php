@@ -4,7 +4,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/iBalay/landlord/dashboard/home.php">
+        <a class="nav-link collapsed" href="/iBalay/saso/dashboard/sasohome.php">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -12,27 +12,12 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Room Components</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-menu-button-wide"></i><span>Landlords</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="../room/add-room.php">
-              <i class="bi bi-circle"></i><span>Add Rooms</span>
-            </a>
-          </li>
-          <li>
-            <a href="../room/show-room.php">
-              <i class="bi bi-circle"></i><span>Show Rooms</span>
-            </a>
-          </li>
-          <li>      
-            <a href="../room/update-room.php">
-              <i class="bi bi-circle"></i><span>Update Rooms</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Room Information</span>
+            <a href="../landlords/list_of_landlords.php">
+              <i class="bi bi-circle"></i><span>List of Landlords</span>
             </a>
           </li>
         </ul>
@@ -40,24 +25,15 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Tenants Components</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-journal-text"></i><span>Boarders</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Tenant Lists</span>
+            <a href="../boarders/list_of_boarders.php">
+              <i class="bi bi-circle"></i><span>Boarder Lists</span>
             </a>
           </li>
           <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Tenant Payment History</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Previous Tenants</span>
-            </a>
-          </li>
         </ul>
       </li><!-- End Tenants Nav -->
 
@@ -69,21 +45,6 @@
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>Room Inquiries</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Reservation</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-
     </ul>
 
   </aside><!-- End Sidebar-->
