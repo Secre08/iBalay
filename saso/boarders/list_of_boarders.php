@@ -32,35 +32,13 @@
 
 <body>
 
-  <?php
+
+<?php
     require('../layouts/sidebar.php');
   ?>
-
-  <main id="main" class="main">
-
-    <div class="pagetitle">
-      <h1>List of boarders</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Boarders</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section dashboard">
-      <div class="row">
-
-        <!-- Left side columns -->
-        <div class="col-lg-8">
-          <div class="row">
-
-
-          </div>
-        </div><!-- End Left side columns -->
-
-      </div>
-    </section>
+    <?php
+    include('views/boarders-show.php');
+  ?>
 
   </main><!-- End #main -->
 

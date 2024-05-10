@@ -59,10 +59,6 @@
           ?>
 
           <?php
-          include('includes/total_previous_tenant.php');
-          ?>
-
-          <?php
           include('includes/total_revenue.php');
           ?>
 

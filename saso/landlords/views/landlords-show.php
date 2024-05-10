@@ -2,7 +2,7 @@
 // Database configuration
 include('../../database/config.php');
 
-// Fetch landlord data
+// Fetch all landlord data
 $query = "SELECT `landlord_id`, `first_name`, `last_name`, `email`, `phone_number`, `address` FROM `landlord_acc`";
 $result = $conn->query($query);
 
@@ -36,31 +36,32 @@ $conn->close();
             <table class="table datatable">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Address</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (!empty($landlords)): ?>
+                        <?php $count = 1; ?>
                         <?php foreach ($landlords as $landlord): ?>
                             <tr>
+                                <td><?php echo $count++; ?></td>
                                 <td><?php echo htmlspecialchars($landlord['first_name']); ?></td>
                                 <td><?php echo htmlspecialchars($landlord['last_name']); ?></td>
                                 <td><?php echo htmlspecialchars($landlord['email']); ?></td>
-                                <td><?php echo htmlspecialchars($landlord['phone_number']); ?></td>
-                                <td><?php echo htmlspecialchars($landlord['address']); ?></td>
                                 <td>
-                                    <!-- Add actions here if needed -->
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#actionModal" data-action-details="<?php echo htmlspecialchars(json_encode($landlord)); ?>">
+                                        View Details
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="6">No landlords available!</td>
+                            <td colspan="5">No landlords available!</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -68,3 +69,7 @@ $conn->close();
         </div>
     </div><!-- End card -->
 </main><!-- End #main -->
+
+<?php include('views/tasks/modal-landlords.php'); ?>
+
+<script src="views/tasks/fetch-landlords.js"></script>

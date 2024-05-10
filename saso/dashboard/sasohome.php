@@ -33,9 +33,7 @@ session_start();
 
 <body>
 
-  <?php
-    require('../layouts/sidebar.php');
-  ?>
+
 
   <main id="main" class="main">
 
@@ -55,6 +53,12 @@ session_start();
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
+          <?php
+    require('../layouts/sidebar.php');
+  ?>
+  <?php
+  include('includes/total_landlord.php');
+  ?>
 
 
           </div>
