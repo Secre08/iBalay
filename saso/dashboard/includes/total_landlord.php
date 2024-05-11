@@ -14,7 +14,7 @@
                         // Function to get total landlords
                         function getTotalLandlords($conn)
                         {
-                            $query = "SELECT COUNT(*) AS total_landlords FROM landlord_acc";
+                            $query = "SELECT COUNT(*) AS total_landlords FROM landlord_acc WHERE approval_status = 1";
                             $result = $conn->query($query);
 
                             if ($result && $result->num_rows > 0) {

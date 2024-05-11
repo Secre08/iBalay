@@ -20,6 +20,11 @@
               <i class="bi bi-circle"></i><span>List of Landlords</span>
             </a>
           </li>
+          <li>
+            <a href="../landlords/landlords_acc_con.php">
+              <i class="bi bi-circle"></i><span>Accounts Confirmation</span>
+            </a>
+          </li>
         </ul>
       </li><!-- End Components Nav -->
 
@@ -37,14 +42,7 @@
         </ul>
       </li><!-- End Tenants Nav -->
 
-      <li class="nav-heading">Other Pages</li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
     </ul>
 
   </aside><!-- End Sidebar-->

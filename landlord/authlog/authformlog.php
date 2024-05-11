@@ -43,9 +43,38 @@
                             </div>
                         </div>
 
+                        <!-- Message Section -->
+                        <div id="loginMessage" class="text-center mt-3"></div>
+
                     </div>
                 </div>
             </div>
         </section>
     </div>
 </main>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        var formData = new FormData(this);
+
+        fetch('login_process.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Redirect to dashboard or another page upon successful login
+                window.location.replace("/dashboard.php");
+            } else {
+                // Update message with error feedback
+                document.getElementById("loginMessage").innerHTML = '<div class="alert alert-danger" role="alert">' + data.message + '</div>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
