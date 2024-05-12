@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2024 at 05:11 PM
+-- Generation Time: May 12, 2024 at 05:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -89,16 +89,17 @@ CREATE TABLE `landlord_acc` (
   `password` varchar(255) NOT NULL,
   `phone_number` varchar(15) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
-  `approval_status` int(11) DEFAULT 0
+  `approval_status` int(11) DEFAULT 0,
+  `warning_count` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `landlord_acc`
 --
 
-INSERT INTO `landlord_acc` (`landlord_id`, `first_name`, `last_name`, `email`, `password`, `phone_number`, `address`, `approval_status`) VALUES
-(1, 'cord', 'moraleta', 'cordmorale101@gmail.com', '$2y$10$LPvuQzOxb/v/DC41/P9RyeQUkML8.EASXDR9jL6jXvttD0eo4BIzG', '234', 'wqe', 1),
-(10, 'Neil', 'Laurente', 'neil.rigor18@gmail.com', '$2y$10$IR4H1h9MidNLGDDmrIZgu.AvN7Fy/HzGiZNttgH9IVN9lDdywDKkq', '09759768057', '1116 trece. Martirez St.', 0);
+INSERT INTO `landlord_acc` (`landlord_id`, `first_name`, `last_name`, `email`, `password`, `phone_number`, `address`, `approval_status`, `warning_count`) VALUES
+(1, 'cord', 'moraleta', 'cordmorale101@gmail.com', '$2y$10$LPvuQzOxb/v/DC41/P9RyeQUkML8.EASXDR9jL6jXvttD0eo4BIzG', '234', 'wqe', 1, 0),
+(15, 'Neil', 'Laurente', 'neil.rigor18@gmail.com', '$2y$10$P3dLxRb0HUllV01BsbACqODfiSORsFxEon515JQkHTraJ1.Jo8N8a', '09759768057', '1116 trece. Martirez St.', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -185,6 +186,25 @@ INSERT INTO `room_reviews` (`review_id`, `room_id`, `TenantID`, `review_comment`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `saso`
+--
+
+CREATE TABLE `saso` (
+  `saso_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `saso`
+--
+
+INSERT INTO `saso` (`saso_id`, `username`, `password`) VALUES
+(1, 'saso', '$2y$10$9eI/.tFVJff7nAAl4qajIe/x9JEvLGOxN06ItGBR4TKFMi92W3OJe');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tenant`
 --
 
@@ -260,6 +280,13 @@ ALTER TABLE `room_reviews`
   ADD KEY `TenantID` (`TenantID`);
 
 --
+-- Indexes for table `saso`
+--
+ALTER TABLE `saso`
+  ADD PRIMARY KEY (`saso_id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Indexes for table `tenant`
 --
 ALTER TABLE `tenant`
@@ -289,7 +316,7 @@ ALTER TABLE `bookmark`
 -- AUTO_INCREMENT for table `landlord_acc`
 --
 ALTER TABLE `landlord_acc`
-  MODIFY `landlord_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `landlord_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `reserved_room`
@@ -308,6 +335,12 @@ ALTER TABLE `room`
 --
 ALTER TABLE `room_reviews`
   MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `saso`
+--
+ALTER TABLE `saso`
+  MODIFY `saso_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tenant`

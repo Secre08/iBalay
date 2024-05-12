@@ -25,6 +25,11 @@
               <i class="bi bi-circle"></i><span>Accounts Confirmation</span>
             </a>
           </li>
+          <li>
+            <a href="../landlords/warning_list.php">
+              <i class="bi bi-circle"></i><span>Warning List</span>
+            </a>
+          </li>
         </ul>
       </li><!-- End Components Nav -->
 

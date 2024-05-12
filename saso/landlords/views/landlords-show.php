@@ -31,14 +31,15 @@
                         $count = 1;
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
-                            echo "<td>" . $count++ . "</td>";
+                            echo "<td>" . $count++ . "</td  >";
                             echo "<td>" . $row['first_name'] . "</td>";
                             echo "<td>" . $row['last_name'] . "</td>";
                             echo "<td>" . $row['email'] . "</td>";
                             echo "<td>
                                     <form method='post' action='views/tasks/accounts_save.php'>
                                         <input type='hidden' name='email' value='" . $row['email'] . "'>
-                                        <button type='submit' class='btn btn-primary' name='confirm'>Confirm</button>
+                                        <button type='submit' class='btn btn-success' name='confirm'><i class='bi bi-check'></i></button>
+                                        <button type='submit' class='btn btn-danger' name='decline'><i class='bi bi-x'></i></button>
                                     </form>
                                   </td>";
                             echo "</tr>";
@@ -52,3 +53,20 @@
         </div>
     </div><!-- End card -->
 </main><!-- End #main -->
+
+<script>
+    // Function to check URL parameter
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+
+    // Check if success parameter is present in the URL
+    var success = getUrlParameter('success');
+    if (success === '1') {
+        // Display success alert
+        alert('Landlord account confirmed successfully!');
+    }
+</script>
