@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
     $email = $_POST['email'];
 
     // Retrieve landlord details based on email
-    $sql = "SELECT * FROM `landlord_acc` WHERE `email` = '$email' AND `approval_status` = 0"; // Only select accounts pending approval
+    $sql = "SELECT * FROM `landlord_acc` WHERE `email` = '$email'"; // Removed the approval_status condition
     $result = mysqli_query($conn, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
@@ -27,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
             echo "Error: " . mysqli_error($conn);
         }
     } else {
-        // Handle error if landlord not found or already approved
-        echo "Error: Landlord not found or already approved!";
+        // Handle error if landlord not found
+        echo "Error: Landlord not found!";
     }
 } else {
     // Redirect if 'confirm' button is not clicked
@@ -37,4 +37,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
 }
 
 mysqli_close($conn);
+
 ?>

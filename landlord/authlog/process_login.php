@@ -16,17 +16,12 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
 
-    if ($user['approval_status'] == 1) {
-        // Account is confirmed, proceed with password verification
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['landlord_id'] = $user['landlord_id']; 
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Invalid password.']);
-        }
+    // Proceed with password verification
+    if (password_verify($password, $user['password'])) {
+        $_SESSION['landlord_id'] = $user['landlord_id']; 
+        echo json_encode(['success' => true]);
     } else {
-        // Account is not confirmed
-        echo json_encode(['success' => false, 'message' => 'Your account is not confirmed.']);
+        echo json_encode(['success' => false, 'message' => 'Invalid password.']);
     }
 } else {
     // Account does not exist
@@ -35,4 +30,5 @@ if ($result->num_rows > 0) {
 
 $stmt->close();
 $conn->close();
+
 ?>

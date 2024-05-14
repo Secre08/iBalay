@@ -1,84 +1,104 @@
-<main id="main" class="main">
+<?php
+// Include your database connection file
+include('../../database/config.php');
+// Turn on error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
+
+// Fetch data from the landlord_acc and bh_information tables
+$sqlOwners = "
+    SELECT 
+        landlord_acc.landlord_id, 
+        landlord_acc.first_name, 
+        landlord_acc.last_name, 
+        landlord_acc.email, 
+        landlord_acc.phone_number, 
+        landlord_acc.address, 
+        bh_information.bh_id, 
+        bh_information.Status, 
+        bh_information.warning_count
+    FROM 
+        landlord_acc 
+    JOIN 
+        bh_information 
+    ON 
+        landlord_acc.landlord_id = bh_information.landlord_id
+    WHERE
+         bh_information.Status = '1' ";
+
+
+$resultOwners = mysqli_query($conn, $sqlOwners);
+
+
+
+
+?>
+
+<main id="main" class="main">
     <div class="pagetitle">
-        <h1>Warning Landlords</h1>
+        <h1>Warning Page</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Warning List</a></li>
+                <li class="breadcrumb-item"><a href="/iBalay.com/iBalay-saso/index.php">Home</a></li>
+                <li class="breadcrumb-item active">Warning Page</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
-        <div class="col-12">
-            <div class="card recent-sales overflow-auto">
-                <div class="card-body">
-                    <h5 class="card-title">Landlords Information</h5>
-                    <table class="table table-borderless datatable" id="roomTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Warning Count</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            include '../../database/config.php';
-
-                            $sql = "SELECT `landlord_id`, `first_name`, `last_name`, `email`, `phone_number`, `address`, `approval_status`, `warning_count` FROM `landlord_acc` WHERE 1";
-
-                            $result = mysqli_query($conn, $sql);
-
-                            if ($result && mysqli_num_rows($result) > 0) {
-                                $count = 1;
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    ?>
+        <?php if ($resultOwners && mysqli_num_rows($resultOwners) > 0): ?>
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+                    <div class="card-body">
+                        <h5 class="card-title">Landlords Information</h5>
+                        <table class="table table-borderless datatable" id="roomTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Contact Number</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Warning Level</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($rowOwner = mysqli_fetch_assoc($resultOwners)): ?>
                                     <tr>
-                                        <td><?php echo $count++; ?></td>
-                                        <td><?php echo $row['first_name']; ?></td>
-                                        <td><?php echo $row['last_name']; ?></td>
-                                        <td><?php echo $row['email']; ?></td>
-                                        <td><?php echo $row['address']; ?></td>
-                                        <td><?php echo $row['phone_number']; ?></td>
-                                        <td><?php echo $row['warning_count']; ?></td>
+                                        <td><?php echo htmlspecialchars($rowOwner['first_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($rowOwner['last_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($rowOwner['phone_number']); ?></td>
+                                        <td><?php echo htmlspecialchars($rowOwner['email']); ?></td>
+                                        <td><?php echo htmlspecialchars($rowOwner['address']); ?></td>
+                                        <td><?php echo htmlspecialchars($rowOwner['warning_count']); ?></td>
                                         <td>
-                                            <?php if ($row['approval_status'] != 1) { ?>
-                                                <form action="views/tasks/set_warning_level.php" method="post">
-                                                    <input type="hidden" name="landlord_id" value="<?php echo $row['landlord_id']; ?>">
-                                                    <button class="btn btn-warning btn-sm" name="warning_level" value="1" onclick="addWarning(this)" <?php echo $row['warning_count'] >= 1 ? 'disabled' : ''; ?>>1</button>
-                                                    <button class="btn btn-warning btn-sm" name="warning_level" value="2" onclick="addWarning(this)" <?php echo $row['warning_count'] >= 2 ? 'disabled' : ''; ?>>2</button>
-                                                    <button class="btn btn-warning btn-sm" name="warning_level" value="3" onclick="addWarning(this)" <?php echo $row['warning_count'] >= 3 ? 'disabled' : ''; ?>>3</button>
-                                                    <button class="btn btn-danger btn-sm" name="terminate_landlord" <?php echo $row['warning_count'] < 3 ? 'disabled' : ''; ?>>Terminate</button>
-                                                </form>
-                                            <?php } ?>
+                                            <form action="views/tasks/set_warning_level.php" method="post" style="display:inline-block;">
+                                                <input type="hidden" name="bh_id" value="<?php echo htmlspecialchars($rowOwner['bh_id']); ?>">
+                                                <button class="btn btn-danger btn-sm" name="warning_level" value="1" <?php echo $rowOwner['warning_count'] >= 1 ? 'disabled' : ''; ?>>1</button>
+                                                <button class="btn btn-danger btn-sm" name="warning_level" value="2" <?php echo $rowOwner['warning_count'] >= 2 ? 'disabled' : ''; ?>>2</button>
+                                                <button class="btn btn-danger btn-sm" name="warning_level" value="3" <?php echo $rowOwner['warning_count'] >= 3 ? 'disabled' : ''; ?>>3</button>
+                                            </form>
+                                            <form action="views/tasks/terminate.php" method="post" style="display:inline-block;">
+                                                <input type="hidden" name="bh_id" value="<?php echo htmlspecialchars($rowOwner['bh_id']); ?>">
+                                                <button class="btn btn-danger btn-sm" name="terminate_owner" <?php echo $rowOwner['warning_count'] < 3 ? 'disabled' : ''; ?>>Terminate</button>
+                                            </form>
                                         </td>
                                     </tr>
-                                    <?php
-                                }
-                            } else {
-                                echo "<tr><td colspan='8'>No landlords found!</td></tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php else: ?>
+            <p>No landlords found.</p>
+        <?php endif; ?>
     </section>
+</main>
 
-</main><!-- End #main -->
-
-<script>
-    // Function to add warning
-    function addWarning(button) {
-        var warningCount = parseInt(button.value);
-        var terminateButton = button.parentElement.querySelector('button[name="terminate_landlord"]');
-        terminateButton.disabled = (warningCount < 3); // Enable terminate button if warning count is 3 or more
-    }
-</script>
+<?php
+// Close the database connection if needed
+mysqli_close($conn);
+?>

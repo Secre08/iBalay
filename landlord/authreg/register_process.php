@@ -29,9 +29,7 @@ $stmt = mysqli_prepare($conn, "INSERT INTO landlord_acc (first_name, last_name, 
 mysqli_stmt_bind_param($stmt, 'ssssss', $first_name, $last_name, $email, $hashed_password, $phone_number, $address);
 
 if (mysqli_stmt_execute($stmt)) {
-    // Redirect to the confirmation page after successful registration
-    header("Location: confimation_acc.php");
-    exit(); // Ensure script execution stops after redirection
+    echo "Landlord registered successfully! Your ID is: " . mysqli_insert_id($conn);
 } else {
     echo "Error registering landlord: " . mysqli_error($conn);
 }

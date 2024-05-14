@@ -1,16 +1,37 @@
+<?php
+// Database configuration
+include('../../database/config.php');
+
+// Fetch all landlord data
+$query = "SELECT `landlord_id`, `first_name`, `last_name`, `email`, `phone_number`, `address` FROM `landlord_acc`";
+$result = $conn->query($query);
+
+$landlords = [];
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $landlords[] = $row;
+    }
+}
+
+$conn->close();
+?>
+
+<?php include('views/tasks/fetch-landlords.php'); ?>
+
 <main id="main" class="main">
     <div class="pagetitle"> 
-        <h1>Account Confirmation</h1>
+        <h1>List of Landlords</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Accounts List</a></li>
+                <li class="breadcrumb-item"><a href="#">Landlords List</a></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Account List</h5>
+            <h5 class="card-title">Landlords List</h5>
 
             <table class="table datatable">
                 <thead>
@@ -23,50 +44,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    include('../../database/config.php');
-                    $sql = "SELECT `first_name`, `last_name`, `email` FROM `landlord_acc` WHERE `approval_status` = 0";
-                    $result = mysqli_query($conn, $sql);
-                    if (mysqli_num_rows($result) > 0) {
-                        $count = 1;
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<tr>";
-                            echo "<td>" . $count++ . "</td  >";
-                            echo "<td>" . $row['first_name'] . "</td>";
-                            echo "<td>" . $row['last_name'] . "</td>";
-                            echo "<td>" . $row['email'] . "</td>";
-                            echo "<td>
-                                    <form method='post' action='views/tasks/accounts_save.php'>
-                                        <input type='hidden' name='email' value='" . $row['email'] . "'>
-                                        <button type='submit' class='btn btn-success' name='confirm'><i class='bi bi-check'></i></button>
-                                        <button type='submit' class='btn btn-danger' name='decline'><i class='bi bi-x'></i></button>
-                                    </form>
-                                  </td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='5'>No landlord accounts pending confirmation!</td></tr>";
-                    }
-                    ?>
+                    <?php if (!empty($landlords)): ?>
+                        <?php $count = 1; ?>
+                        <?php foreach ($landlords as $landlord): ?>
+                            <tr>
+                                <td><?php echo $count++; ?></td>
+                                <td><?php echo htmlspecialchars($landlord['first_name']); ?></td>
+                                <td><?php echo htmlspecialchars($landlord['last_name']); ?></td>
+                                <td><?php echo htmlspecialchars($landlord['email']); ?></td>
+                                <td>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#actionModal" data-action-details="<?php echo htmlspecialchars(json_encode($landlord)); ?>">
+                                        View Details
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5">No landlords available!</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
     </div><!-- End card -->
 </main><!-- End #main -->
 
-<script>
-    // Function to check URL parameter
-    function getUrlParameter(name) {
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(location.search);
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    };
+<?php include('views/tasks/modal-landlords.php'); ?>
 
-    // Check if success parameter is present in the URL
-    var success = getUrlParameter('success');
-    if (success === '1') {
-        // Display success alert
-        alert('Landlord account confirmed successfully!');
-    }
-</script>
+<script src="views/tasks/fetch-landlords.js"></script>
