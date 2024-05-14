@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2024 at 05:04 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: May 14, 2024 at 10:23 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,15 +45,18 @@ CREATE TABLE `bh_information` (
   `gender_allowed` enum('male','female','all') NOT NULL,
   `Status` enum('0','1','2') DEFAULT NULL,
   `longitude` double DEFAULT NULL,
-  `latitude` double DEFAULT NULL
+  `latitude` double DEFAULT NULL,
+  `close_bh` tinyint(1) NOT NULL DEFAULT 0,
+  `warning_count` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bh_information`
 --
 
-INSERT INTO `bh_information` (`bh_id`, `landlord_id`, `BH_name`, `BH_address`, `Document1`, `Document2`, `monthly_payment_rate`, `number_of_kitchen`, `number_of_living_room`, `number_of_students`, `number_of_cr`, `number_of_beds`, `number_of_rooms`, `bh_max_capacity`, `gender_allowed`, `Status`, `longitude`, `latitude`) VALUES
-(12, 1, 'cord', 'brgy. imelda, tolosa, leyte', '/opt/lampp/htdocs/iBalay/uploads/documents/landlord_1/663ae38bbe1b3_Letter-of-intent-ADAS.pdf', '/opt/lampp/htdocs/iBalay/uploads/documents/landlord_1/663ae38bbe3f2_Letter-of-intent-ADAS.pdf', '1000 - 3243', 2, 2, 2, 2, 2, 2, 2, 'all', '1', 125.01156818078637, 11.097570201927695);
+INSERT INTO `bh_information` (`bh_id`, `landlord_id`, `BH_name`, `BH_address`, `Document1`, `Document2`, `monthly_payment_rate`, `number_of_kitchen`, `number_of_living_room`, `number_of_students`, `number_of_cr`, `number_of_beds`, `number_of_rooms`, `bh_max_capacity`, `gender_allowed`, `Status`, `longitude`, `latitude`, `close_bh`, `warning_count`) VALUES
+(12, 1, 'cord', 'brgy. imelda, tolosa, leyte', '/opt/lampp/htdocs/iBalay/uploads/documents/landlord_1/663ae38bbe1b3_Letter-of-intent-ADAS.pdf', '/opt/lampp/htdocs/iBalay/uploads/documents/landlord_1/663ae38bbe3f2_Letter-of-intent-ADAS.pdf', '1000 - 3243', 2, 2, 2, 2, 2, 2, 2, 'all', '1', 125.01156818078637, 11.097570201927695, 0, 2),
+(15, 22, 'hhh', 'dsdas', 'C:/xampp/htdocs/iBalay/uploads/documents/landlord_22/664311134f20d_Laboratory Report.docx', 'C:/xampp/htdocs/iBalay/uploads/documents/landlord_22/66431113566c1_Personal Identification.docx', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'male', '0', 0, 0, 0, 3);
 
 -- --------------------------------------------------------
 
@@ -88,18 +91,16 @@ CREATE TABLE `landlord_acc` (
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `phone_number` varchar(15) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `approval_status` int(11) DEFAULT 0,
-  `warning_count` int(11) DEFAULT 0
+  `address` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `landlord_acc`
 --
 
-INSERT INTO `landlord_acc` (`landlord_id`, `first_name`, `last_name`, `email`, `password`, `phone_number`, `address`, `approval_status`, `warning_count`) VALUES
-(1, 'cord', 'moraleta', 'cordmorale101@gmail.com', '$2y$10$LPvuQzOxb/v/DC41/P9RyeQUkML8.EASXDR9jL6jXvttD0eo4BIzG', '234', 'wqe', 1, 0),
-(15, 'Neil', 'Laurente', 'neil.rigor18@gmail.com', '$2y$10$P3dLxRb0HUllV01BsbACqODfiSORsFxEon515JQkHTraJ1.Jo8N8a', '09759768057', '1116 trece. Martirez St.', 1, 0);
+INSERT INTO `landlord_acc` (`landlord_id`, `first_name`, `last_name`, `email`, `password`, `phone_number`, `address`) VALUES
+(1, 'cord', 'moraleta', 'cordmorale101@gmail.com', '$2y$10$LPvuQzOxb/v/DC41/P9RyeQUkML8.EASXDR9jL6jXvttD0eo4BIzG', '234', 'wqe'),
+(22, 'Neil Rigor', 'Laurente', 'neil.rigor18@gmail.com', '$2y$10$diNHJ8l.N.KzTWpmoHitgOUwjTh47AL2yeESKNL/fdF7z9x4PGo2G', '1234', 'Brgy. 96');
 
 -- --------------------------------------------------------
 
@@ -304,7 +305,7 @@ ALTER TABLE `tenant`
 -- AUTO_INCREMENT for table `bh_information`
 --
 ALTER TABLE `bh_information`
-  MODIFY `bh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `bh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `bookmark`
@@ -316,7 +317,7 @@ ALTER TABLE `bookmark`
 -- AUTO_INCREMENT for table `landlord_acc`
 --
 ALTER TABLE `landlord_acc`
-  MODIFY `landlord_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `landlord_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `reserved_room`
