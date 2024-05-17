@@ -29,6 +29,11 @@
               <i class="bi bi-circle"></i><span>Warning List</span>
             </a>
           </li>
+          <li>
+            <a href="../landlords/declined_bh.php">
+              <i class="bi bi-circle"></i><span>Declined BH</span>
+            </a>
+          </li>
         </ul>
       </li><!-- End Components Nav -->
 

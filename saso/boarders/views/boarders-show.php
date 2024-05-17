@@ -48,8 +48,10 @@ $conn->close();
                                 <td><?php echo htmlspecialchars($boarder['FirstName']); ?></td>
                                 <td><?php echo htmlspecialchars($boarder['LastName']); ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-primary view-details" data-bs-toggle="modal" data-bs-target="#viewDetailsModal" data-details="<?php echo htmlspecialchars(json_encode($boarder)); ?>">
-                                        View Details
+                                    <!-- Use an icon instead of text for the button -->
+                                    <button type="button" class="btn btn-primary view-details" data-bs-toggle="modal" data-bs-target="#viewDetailsModal" data-details="<?php echo htmlspecialchars(json_encode($boarder)); ?>" title="View Details">
+                                        <!-- Bootstrap Icons info-circle icon -->
+                                        <i class="bi bi-info-circle"></i> 
                                     </button>
                                 </td>
                             </tr>
@@ -86,23 +88,30 @@ $conn->close();
 </div>
 
 <script>
-    const viewDetailsButtons = document.querySelectorAll('.view-details');
-    const studentIDElement = document.getElementById('studentID');
-    const nameElement = document.getElementById('name');
-    const emailElement = document.getElementById('email');
-    const phoneNumberElement = document.getElementById('phoneNumber');
-    const addressElement = document.getElementById('address');
-    const genderElement = document.getElementById('gender');
+// Get modal elements
+const viewDetailsModal = document.getElementById('viewDetailsModal');
+const studentIDElement = viewDetailsModal.querySelector('#studentID');
+const nameElement = viewDetailsModal.querySelector('#name');
+const emailElement = viewDetailsModal.querySelector('#email');
+const phoneNumberElement = viewDetailsModal.querySelector('#phoneNumber');
+const addressElement = viewDetailsModal.querySelector('#address');
+const genderElement = viewDetailsModal.querySelector('#gender');
 
-    viewDetailsButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const details = JSON.parse(button.getAttribute('data-details'));
-            studentIDElement.textContent = details.student_id;
-            nameElement.textContent = details.FirstName + ' ' + details.LastName;
-            emailElement.textContent = details.Email;
-            phoneNumberElement.textContent = details.PhoneNumber;
-            addressElement.textContent = details.address;
-            genderElement.textContent = details.gender;
-        });
+// Listen for click events on view details buttons
+document.querySelectorAll('.view-details').forEach(button => {
+    button.addEventListener('mouseenter', () => {
+        button.setAttribute('title', 'View Details');
     });
+
+    button.addEventListener('click', () => {
+        const details = JSON.parse(button.getAttribute('data-details'));
+        studentIDElement.textContent = details.student_id;
+        nameElement.textContent = details.FirstName + ' ' + details.LastName;
+        emailElement.textContent = details.Email;
+        phoneNumberElement.textContent = details.PhoneNumber;
+        addressElement.textContent = details.address;
+        genderElement.textContent = details.gender;
+    });
+});
+
 </script>

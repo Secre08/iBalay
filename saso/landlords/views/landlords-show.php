@@ -2,8 +2,11 @@
 // Database configuration
 include('../../database/config.php');
 
-// Fetch all landlord data
-$query = "SELECT `landlord_id`, `first_name`, `last_name`, `email`, `phone_number`, `address` FROM `landlord_acc`";
+// Fetch landlords with status = 1
+$query = "SELECT l.`landlord_id`, l.`first_name`, l.`last_name`, l.`email`, l.`phone_number`, l.`address` 
+          FROM `landlord_acc` l 
+          INNER JOIN `bh_information` b ON l.`landlord_id` = b.`landlord_id`
+          WHERE b.`Status` = '1'";
 $result = $conn->query($query);
 
 $landlords = [];
@@ -16,6 +19,7 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 ?>
+
 
 <?php include('views/tasks/fetch-landlords.php'); ?>
 
@@ -53,8 +57,12 @@ $conn->close();
                                 <td><?php echo htmlspecialchars($landlord['last_name']); ?></td>
                                 <td><?php echo htmlspecialchars($landlord['email']); ?></td>
                                 <td>
+                                    <!-- Use an icon instead of text for the button -->
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#actionModal" data-action-details="<?php echo htmlspecialchars(json_encode($landlord)); ?>">
-                                        View Details
+                                        <!-- Bootstrap Icons info-circle icon -->
+                                        <i class="bi bi-info-circle"></i> 
+                                        <!-- Add tooltip for "View Details" -->
+                                        <span class="visually-hidden">View Details</span>
                                     </button>
                                 </td>
                             </tr>
