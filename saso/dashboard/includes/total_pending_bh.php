@@ -1,10 +1,10 @@
 <div class="col-xxl-4 col-xl-6">
     <div class="card info-card revenue-card">
         <div class="card-body">
-            <h5 class="card-title"><a href="/iBalay.com/iBalay-saso/register-owner.php" style="color: #00008B;">Pending BH</a></h5>
+            <h5 class="card-title"><a href="#" style="color: #00008B;">Pending BH</a></h5>
             <div class="d-flex align-items-center">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-person-circle" style="color: pink;"></i>
+                    <i class="bi bi-houses-fill"></i>
                 </div>
                 <div class="ps-3">
                     <?php

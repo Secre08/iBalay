@@ -1,3 +1,23 @@
+<script>
+    // Function to display a confirmation dialog and perform action accordingly
+    function confirmAction(message, action) {
+        if (confirm(message)) {
+            // If user confirms, perform the action
+            action();
+        } else {
+            // If user cancels, do nothing
+            return false;
+        }
+    }
+
+    // Function to display an alert and reload the page
+    function showAlertAndRefresh(message) {
+        alert(message);
+        location.reload(); // Reload the page
+    }
+</script>
+
+<!-- Modify your PHP code to include the confirmation dialog -->
 <?php
 // Include your database connection file
 include('../../database/config.php');
@@ -29,9 +49,6 @@ $sqlOwners = "
 
 
 $resultOwners = mysqli_query($conn, $sqlOwners);
-
-
-
 
 ?>
 
@@ -76,13 +93,13 @@ $resultOwners = mysqli_query($conn, $sqlOwners);
                                         <td>
                                             <form action="views/tasks/set_warning_level.php" method="post" style="display:inline-block;">
                                                 <input type="hidden" name="bh_id" value="<?php echo htmlspecialchars($rowOwner['bh_id']); ?>">
-                                                <button class="btn btn-danger btn-sm" name="warning_level" value="1" <?php echo $rowOwner['warning_count'] >= 1 ? 'disabled' : ''; ?>>1</button>
-                                                <button class="btn btn-danger btn-sm" name="warning_level" value="2" <?php echo $rowOwner['warning_count'] >= 2 ? 'disabled' : ''; ?>>2</button>
-                                                <button class="btn btn-danger btn-sm" name="warning_level" value="3" <?php echo $rowOwner['warning_count'] >= 3 ? 'disabled' : ''; ?>>3</button>
+                                                <button class="btn btn-danger btn-sm" name="warning_level" value="1" <?php echo $rowOwner['warning_count'] >= 1 ? 'disabled' : 'onclick="return confirmAction(\'Are you sure you want to set warning level 1?\', function() { showAlertAndRefresh(\'Warning level 1 clicked!\'); })"'; ?>>1</button>
+                                                <button class="btn btn-danger btn-sm" name="warning_level" value="2" <?php echo $rowOwner['warning_count'] >= 2 ? 'disabled' : 'onclick="return confirmAction(\'Are you sure you want to set warning level 2?\', function() { showAlertAndRefresh(\'Warning level 2 clicked!\'); })"'; ?>>2</button>
+                                                <button class="btn btn-danger btn-sm" name="warning_level" value="3" <?php echo $rowOwner['warning_count'] >= 3 ? 'disabled' : 'onclick="return confirmAction(\'Are you sure you want to set warning level 3?\', function() { showAlertAndRefresh(\'Warning level 3 clicked!\'); })"'; ?>>3</button>
                                             </form>
                                             <form action="views/tasks/terminate.php" method="post" style="display:inline-block;">
                                                 <input type="hidden" name="bh_id" value="<?php echo htmlspecialchars($rowOwner['bh_id']); ?>">
-                                                <button class="btn btn-danger btn-sm" name="terminate_owner" <?php echo $rowOwner['warning_count'] < 3 ? 'disabled' : ''; ?>>Terminate</button>
+                                                <button class="btn btn-danger btn-sm" name="terminate_owner" <?php echo $rowOwner['warning_count'] < 3 ? 'disabled' : 'onclick="return confirmAction(\'Are you sure you want to terminate this owner?\', function() { showAlertAndRefresh(\'Terminate button clicked!\'); })"'; ?>>Terminate</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -102,3 +119,31 @@ $resultOwners = mysqli_query($conn, $sqlOwners);
 // Close the database connection if needed
 mysqli_close($conn);
 ?>
+
+<script>
+    // Your AJAX request function
+    function sendAjaxRequest(warningLevel, bhId) {
+        // Your AJAX request code here
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/iBalay/saso/landlords/views/tasks/set_warning_level.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // If the update was successful, redirect to the warning list page
+                        window.location.href = response.redirect;
+                    } else {
+                        // If there was an error, display an error message
+                        alert("Error: " + response.message);
+                    }
+                } else {
+                    // If there was a server error, display an error message
+                    alert("Error: Server responded with status " + xhr.status);
+                }
+            }
+        };
+        xhr.send("warning_level=" + warningLevel + "&bh_id=" + bhId);
+    }
+</script>

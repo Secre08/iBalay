@@ -4,7 +4,7 @@
             <h5 class="card-title">Female Boarders</h5>
             <div class="d-flex align-items-center">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-gender-female"></i>
+                    <i class="bi bi-gender-female " style="color: pink;"h ></i>
                 </div>
                 <div class="ps-3">
                     <?php

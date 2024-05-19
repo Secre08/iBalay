@@ -15,8 +15,9 @@ if ($stmt) {
     // Bind the parameters and execute the statement
     $stmt->bind_param("ii", $warningLevel, $bhId);
     if ($stmt->execute()) {
-        // If the query is successful, send a success response
-        echo json_encode(array('success' => true));
+        // If the query is successful, redirect to the warning list page
+        header("Location: /iBalay/saso/landlords/warning_list.php");
+        exit; // Ensure script execution stops after redirection
     } else {
         // If there is an error in the query, send an error response
         echo json_encode(array('success' => false, 'message' => 'Error updating warning level: ' . $conn->error));
@@ -31,6 +32,7 @@ if ($stmt) {
 // Close the database connection
 $conn->close();
 ?>
+
 <?php
 // Include your database connection file
 include('../../../../database/config.php');

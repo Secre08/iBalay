@@ -21,12 +21,16 @@
             </a>
           </li>
           <li>
-
             </a>
           </li>
           <li>
             <a href="../landlords/warning_list.php">
               <i class="bi bi-circle"></i><span>Warning List</span>
+            </a>
+          </li>
+          <li>
+            <a href="../landlords/terminated_list.php">
+              <i class="bi bi-circle"></i><span>Terminated List</span>
             </a>
           </li>
           <li>

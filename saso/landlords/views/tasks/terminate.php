@@ -6,7 +6,7 @@ include('../../../../database/config.php');
 $bhId = $_POST['bh_id'];
 
 // Perform the database update query to set close_bh to 1 for the related boarding house
-$sqlUpdateBH = "UPDATE bh_information SET Status = '0' WHERE bh_id = '$bhId'";
+$sqlUpdateBH = "UPDATE bh_information SET Status = '3' WHERE bh_id = '$bhId'";
 
 if (mysqli_query($conn, $sqlUpdateBH)) {
     // Close the database connection
